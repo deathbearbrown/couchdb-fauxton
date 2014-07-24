@@ -92,6 +92,9 @@ function(app, FauxtonAPI, resizeColumns, ZeroClipboard) {
     });
   };
 
+
+  //this is garbage
+
   Fauxton.Breadcrumbs = FauxtonAPI.View.extend({
     template: "addons/fauxton/templates/breadcrumbs",
 
@@ -106,6 +109,9 @@ function(app, FauxtonAPI, resizeColumns, ZeroClipboard) {
       this.crumbs = options.crumbs;
     }
   });
+
+
+
 
   Fauxton.VersionInfo = Backbone.Model.extend({
     url: function () {

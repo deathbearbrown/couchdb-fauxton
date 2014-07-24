@@ -38,7 +38,7 @@ function(app, FauxtonAPI, plugins) {
         },
 
         pluginsRoute: function () {
-          this.setView("#dashboard-content", new plugins.Hello({}));
+          this.setView("#col2", new plugins.Hello({}));
         }
       });
 

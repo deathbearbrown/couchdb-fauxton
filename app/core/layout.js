@@ -11,7 +11,7 @@
 // the License.
 
 define([
-  "backbone", 
+  "backbone",
   "plugins/backbone.layoutmanager"
 ], function(Backbone) {
 
@@ -19,11 +19,12 @@ define([
   // Allows the main layout of the page to be changed by any plugin.
   var Layout = function () {
     this.layout = new Backbone.Layout({
-      template: "templates/layouts/with_sidebar",
+      template: "templates/layouts/default_template",
     });
 
     this.layoutViews = {};
     this.el = this.layout.el;
+    this.$el = this.layout.$el;
   };
 
   Layout.configure = function (options) {
@@ -37,18 +38,40 @@ define([
     },
 
     setTemplate: function(template) {
+      console.log(template);
       if (template.prefix){
         this.layout.template = template.prefix + template.name;
       } else{
-        this.layout.template = "templates/layouts/" + template;
+        this.layout.template = "templates/layouts/" + template.template;
       }
+
+      //set wrapper
+      this.setWrapperClass(template);
+
       // If we're changing layouts all bets are off, so kill off all the
       // existing views in the layout.
       _.each(this.layoutViews, function(view){view.remove();});
       this.layoutViews = {};
       this.render();
     },
+    setWrapperClass: function(template){
+      var $el = this.$el,
+          classes = template.className,
+          existingClasses = $el.attr('class')? $el.attr('class').split(' ') : [];
 
+      //add classes if they aren't there
+      for (var i = 0; i< classes.length; i++){
+        if ((!$el.hasClass(template.className[i]))){
+          $el.addClass(template.className[i]);
+        }
+      }
+      //remove old classes
+      for (var x = 0; x< existingClasses.length; x++){
+        if ($.inArray(existingClasses[x],classes) === -1){
+          $el.removeClass(existingClasses[x]);
+        }
+      }
+    },
     setView: function(selector, view, keep) {
       this.layout.setView(selector, view, false);
 
@@ -76,7 +99,7 @@ define([
       }
 
       view.remove();
-      
+
       if (this.layoutViews[selector]) {
         delete this.layoutViews[selector];
       }

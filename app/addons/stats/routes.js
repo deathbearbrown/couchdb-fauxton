@@ -19,7 +19,10 @@ define([
 function(app, FauxtonAPI, Stats) {
 
   var StatsRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: "with_sidebar",
+    layout: {
+      template: "default_template",
+      className: ["with_sidebar"]
+    },
 
     routes: {
       "stats":"showStats",
@@ -35,14 +38,14 @@ function(app, FauxtonAPI, Stats) {
 
     initialize: function () {
       this.stats = new Stats.Collection();
-      this.setView("#sidebar-content", new Stats.Views.StatSelect({
+      this.setView("#col1", new Stats.Views.StatSelect({
         collection: this.stats
       }));
 
     },
 
     showStats: function () {
-      this.setView("#dashboard-content", new Stats.Views.Statistics({
+      this.setView("#col2", new Stats.Views.Statistics({
         collection: this.stats
       }));
     },

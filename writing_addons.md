@@ -133,7 +133,7 @@ Then define a route in `routes.js` that the addon is accessible at:
         },
 
         helloRoute: function () {
-          this.setView("#dashboard-content", new Resources.Hello({}));
+          this.setView("#col2", new Resources.Hello({}));
         }
       });
 

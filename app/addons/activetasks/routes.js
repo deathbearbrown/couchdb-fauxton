@@ -20,7 +20,10 @@ define([
 function (app, FauxtonAPI, Activetasks, Views) {
 
   var ActiveTasksRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: "with_sidebar",
+    layout: {
+      template: "default_template",
+      className: ["with_sidebar"]
+    },
 
     routes: {
       "activetasks/:id": "defaultView",
@@ -44,12 +47,12 @@ function (app, FauxtonAPI, Activetasks, Views) {
     },
 
     defaultView: function () {
-      this.setView("#dashboard-content", new Views.View({
+      this.setView("#col2", new Views.View({
         collection: this.allTasks,
         currentView: "all"
       }));
 
-      this.setView("#sidebar-content", new Views.TabMenu({}));
+      this.setView("#col1", new Views.TabMenu({}));
     }
   });
 

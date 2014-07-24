@@ -22,6 +22,7 @@
 @import "bootstrap/mixins.less";
 @import "prettyprint.less";
 @import "icons.less";
+@import "templates.less";
 
 /**
  * HTML-wide overrides
@@ -554,101 +555,12 @@ table.databases {
 
 /*dashboard content can be in multiple templates*/
 
-#dashboard-content{
-  &.row-fluid,
-  &.window-resizeable{
-    /*remove gutter without rewriting variable*/
-    margin-left: 0px;
-  }
-  padding: 20px;
-  .with-sidebar &{
-    border-left: 1px solid #999;
-    border-right: 1px solid #999;
-    width: auto;
-    .box-shadow(-6px 0 rgba(0, 0, 0, 0.1));
-    padding: 0px;
-    bottom: 0px;
-    top: 60px;
-    position: fixed;
-    overflow-x: hidden;
-    overflow-y: auto;
-    left: @sidebarWidth+@navWidth;
-    right: 0;
-    .box-sizing(border-box);
-    .closeMenu & {
-      left: @sidebarWidth+@collapsedNavWidth;
-    }
-  }
-  > div.inner {
-    display: block;
-  }
-}
 
-.with-sidebar.content-area {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-// .closeMenu .with-sidebar.content-area {
-//   left: 0;
-// }
 /*tools*/
 
 .row-fluid.content-area{
   background-color: @background;
 }
-
-
-.fixed-header{
-  background-color: @breadcrumbBG;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: @navWidth;
-  .closeMenu & {
-    left: @collapsedNavWidth;
-  }
-  border-bottom: 5px solid @breadcrumbBorder;
-  .box-shadow(0 4px 6px -2px #808080);
-  z-index: 100;
-  .one-pane & {
-    position: relative;
-    border: none;
-    .box-shadow(none);
-    left: auto;
-  }
-}
-
-#breadcrumbs {
-   .breadcrumb {
-    margin: 15px 20px;
-    margin-bottom: 0;
-    background-color: transparent;
-    padding: 0;
-    li {
-      .divider {
-        font-size: 12px;
-        color: @breadcrumbArrow;
-      }
-      &:first-child {
-        font-size: 30px;
-      }
-      color: @breadcrumbText;
-      font-size: 18px;
-      text-shadow: none;
-      &.active{
-        color: #333;
-      }
-      a{
-        color: @breadcrumbText;
-      }
-    }
-   }
-}
-
 
 /*SIDEBAR TEMPLATE STYLES*/
 .topmenu-defaults {
@@ -736,16 +648,6 @@ table.databases {
   }
 }
 
-#sidebar-content {
-  position: absolute;
-  top: 60px;
-  width: @sidebarWidth;
-  left: 0;
-  background-color: @secondarySidebar;
-  > div.inner {
-    display: block;
-  }
-}
 
 
 /*ONE PANEL TEMPLATE ONLY STYLES  AKA _all_dbs */
@@ -947,8 +849,8 @@ div.spinner {
     .copying {
       background-color: #999;
     }
-    .zeroclipboard-is-hover { 
-      background-color: #cbcbcb; 
+    .zeroclipboard-is-hover {
+      background-color: #cbcbcb;
     }
     .icon {
       vertical-align: bottom;

@@ -138,7 +138,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
 
       if (event) { event.preventDefault();}
 
-      $('#dashboard-content').scrollTop(0); //scroll up
+      $('#col2').scrollTop(0); //scroll up
 
       if (this.hasValidCode() && this.$('#new-ddoc:visible').val() !=="") {
         var mapVal = this.mapEditor.getValue(),
@@ -342,7 +342,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
     },
 
     toggleIndexNav: function (event) {
-      $('#dashboard-content').scrollTop(0); //scroll up
+      $('#col2').scrollTop(0); //scroll up
 
       var $targetId = this.$(event.target).attr('id'),
           $previousTab = this.$(this.$('li.active a').attr('href')),
@@ -355,7 +355,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
       if ($targetId === 'index-nav') {
         if (this.newView) { return; }
         var that = this;
-        $('#dashboard-content').scrollTop(0); //scroll up
+        $('#col2').scrollTop(0); //scroll up
         $targetTab.toggle('slow', function(){
            that.showEditors();
         });
@@ -459,13 +459,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
       }
 
       this.designDocSelector.updateDesignDoc();
-      if (this.newView || this.showIndex) {
-        this.showEditors();
-        this.showIndex = false;
-      } else {
-        this.$('#index').hide();
-        this.$('#index-nav').parent().removeClass('active');
-      }
+      this.showEditors();
 
     },
 

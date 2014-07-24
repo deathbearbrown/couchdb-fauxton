@@ -38,7 +38,9 @@ function(app, FauxtonAPI, Stats, d3, nv) {
   });
 
   Views.Pie = FauxtonAPI.View.extend({
-    className: "datatype-section",
+    className: function(){
+      return "datatype-section "+this.datatype + '_section' ;
+    },
     template: 'addons/stats/templates/pie_table',
 
     initialize: function(args){
@@ -91,8 +93,6 @@ function(app, FauxtonAPI, Stats, d3, nv) {
 
             return chart;
         });
-
-      this.$el.addClass(this.datatype + '_section');
     }
   });
 

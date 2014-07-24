@@ -245,7 +245,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, Views, QueryOptions,
     },
 
     toggleQuery: function (event) {
-      $('#dashboard-content').scrollTop(0);
+      $('#col2').scrollTop(0);
       this.$('#query').toggle('slow');
     },
 
@@ -318,6 +318,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, Views, QueryOptions,
   // TODO: Rename to reflect that this is a list of rows or documents
   Views.AllDocsList = FauxtonAPI.View.extend({
     template: "addons/documents/templates/all_docs_list",
+    className: "view",
     events: {
       "click button.all": "selectAll",
       "click button.js-bulk-delete": "bulkDelete",
@@ -407,7 +408,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, Views, QueryOptions,
     },
 
     scrollToQuery: function () {
-      $('#dashboard-content').animate({ scrollTop: 0 }, 'slow');
+      $('#col2').animate({ scrollTop: 0 }, 'slow');
     },
 
     establish: function() {
@@ -471,7 +472,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, Views, QueryOptions,
     addPagination: function () {
       this.pagination = new Components.IndexPagination({
         collection: this.collection,
-        scrollToSelector: '#dashboard-content',
+        scrollToSelector: '#col2',
         docLimit: this.params.limit,
         perPage: this.perPageDefault
       });

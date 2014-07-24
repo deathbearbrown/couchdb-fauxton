@@ -175,9 +175,11 @@ module.exports = function(grunt) {
           setTimeout: true,
           prompt: true,
           confirm: true,
-
+          quotmark: "single",
+          trailing: true,
           jQuery: true,
           Backbone: true,
+          unused: "vars",
           $: true,
           _: true,
           require: true,

@@ -29,7 +29,10 @@ define([
 function(app, FauxtonAPI, Documents, Changes, Index, DocEditor, Databases, Resources) {
 
   var DocEditorRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: "one_pane",
+    layout: {
+      template: "default_template",
+      className: ["one_col"]
+    },
     disableLoader: true,
     selectedHeader: "Databases",
     initialize: function(route, masterLayout, options) {
@@ -63,7 +66,7 @@ function(app, FauxtonAPI, Documents, Changes, Index, DocEditor, Databases, Resou
 
     code_editor: function (database, doc) {
 
-      this.docView = this.setView("#dashboard-content", new DocEditor.CodeEditor({
+      this.docView = this.setView("#col1", new DocEditor.CodeEditor({
         model: this.doc,
         database: this.database
       }));
@@ -125,7 +128,10 @@ function(app, FauxtonAPI, Documents, Changes, Index, DocEditor, Databases, Resou
   });
 
   var DocumentsRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: "with_tabs_sidebar",
+    layout: {
+      template: "with_tabs_sidebar",
+      className: ["with_sidebar"]
+    },
     selectedHeader: "Databases",
     routes: {
 
@@ -186,7 +192,7 @@ function(app, FauxtonAPI, Documents, Changes, Index, DocEditor, Databases, Resou
         }
       });
 
-      this.sidebar = this.setView("#sidebar-content", new Documents.Views.Sidebar({
+      this.sidebar = this.setView("#col1", new Documents.Views.Sidebar({
         collection: this.data.designDocs,
         database: this.data.database
       }));
@@ -263,7 +269,6 @@ function(app, FauxtonAPI, Documents, Changes, Index, DocEditor, Databases, Resou
       this.viewEditor && this.viewEditor.remove();
 
       this.data.database.allDocs.paging.pageSize = this.getDocPerPageLimit(urlParams, parseInt(docParams.limit, 10));
-
       this.viewEditor = this.setView("#dashboard-upper-content", new Documents.Views.AllDocsLayout({
         database: this.data.database,
         collection: this.data.database.allDocs,
@@ -507,6 +512,7 @@ function(app, FauxtonAPI, Documents, Changes, Index, DocEditor, Databases, Resou
       this.documentsView = this.setView("#dashboard-lower-content", new Changes.Changes({
         model: this.data.database
       }));
+
 
       this.toolsView && this.toolsView.remove();
       this.viewEditor && this.viewEditor.remove();

@@ -33,10 +33,10 @@ function(FauxtonAPI) {
       return primaryNavWidth;
     },
     getPanelWidth: function(){
-      var sidebarWidth = $('#sidebar-content').length > 0 ? $('#sidebar-content').outerWidth() : 0,
+      var sidebarWidth = $('#col1').length > 0 ? $('#col1').outerWidth() : 0,
           borders = parseInt($('#dashboard').css('border-left-width'), 10) +
-                    parseInt($('#dashboard-content').css('border-left-width'), 10) +
-                    parseInt($('#dashboard-content').css('border-right-width'), 10);
+                    parseInt($('#col2').css('border-left-width'), 10) +
+                    parseInt($('#col2').css('border-right-width'), 10);
 
       return (this.getPrimaryNavWidth() + sidebarWidth + borders);
     },
@@ -65,7 +65,7 @@ function(FauxtonAPI) {
         this.options.onResizeHandler();
       } else {
         var combinedWidth = window.innerWidth - this.getPanelWidth(),
-        smallWidthConstraint = ($('#sidebar-content').length > 0)? 470:800,
+        smallWidthConstraint = ($('#col1').length > 0)? 470:800,
         panelWidth;
 
         if (combinedWidth > smallWidthConstraint) {

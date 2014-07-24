@@ -23,7 +23,10 @@ define([
 function(app, FauxtonAPI, Compaction, Databases) {
 
   var  CompactionRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: "one_pane",
+    layout: {
+      template: "default_template",
+      className: ["one_col"]
+    },
 
     crumbs: function () {
       return [
@@ -43,7 +46,7 @@ function(app, FauxtonAPI, Compaction, Databases) {
     },
 
     compaction: function () {
-      this.setView('#dashboard-content', new Compaction.Layout({model: this.database}));
+      this.setView('#col1', new Compaction.Layout({model: this.database}));
     },
 
     establish: function () {

@@ -17,9 +17,12 @@ define([
        "addons/permissions/views"
 ],
 function (app, FauxtonAPI, Databases, Permissions) {
-  
+
   var PermissionsRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: 'one_pane',
+    layout: {
+      template: "default_template",
+      className: ["one_col"]
+    },
     selectedHeader: 'Databases',
 
     routes: {
@@ -42,7 +45,7 @@ function (app, FauxtonAPI, Databases, Permissions) {
     },
 
     permissions: function () {
-      this.setView('#dashboard-content', new Permissions.Permissions({
+      this.setView('#col1', new Permissions.Permissions({
         database: this.database,
         model: this.security
       }));
@@ -57,7 +60,7 @@ function (app, FauxtonAPI, Databases, Permissions) {
     },
 
   });
-  
+
   Permissions.RouteObjects = [PermissionsRouteObject];
   return Permissions;
 });

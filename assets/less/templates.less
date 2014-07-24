@@ -1,0 +1,139 @@
+@import "bootstrap/bootstrap.less";
+@import "variables.less";
+
+/*defaults */
+.main-panel{
+  &.row-fluid,
+  &.window-resizeable{
+    /*remove gutter without rewriting variable*/
+    margin-left: 0px;
+  }
+  padding: 20px;
+  > div.inner {
+    display: block;
+  }
+}
+
+/* header */
+.fixed-header{
+  background-color: @breadcrumbBG;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: @navWidth;
+  .closeMenu & {
+    left: @collapsedNavWidth;
+  }
+  border-bottom: 5px solid @breadcrumbBorder;
+  .box-shadow(0 4px 6px -2px #808080);
+  z-index: 100;
+}
+
+
+/*breadcrumbs */
+#breadcrumbs {
+   .breadcrumb {
+    margin: 15px 20px;
+    margin-bottom: 0;
+    background-color: transparent;
+    padding: 0;
+    li {
+      .divider {
+        font-size: 12px;
+        color: @breadcrumbArrow;
+      }
+      &:first-child {
+        font-size: 30px;
+      }
+      color: @breadcrumbText;
+      font-size: 18px;
+      text-shadow: none;
+      &.active{
+        color: #333;
+      }
+      a{
+        color: @breadcrumbText;
+      }
+    }
+   }
+}
+
+
+
+/* template types */
+
+#app-container{
+
+  .with_sidebar{
+    .content-area {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    #col1 {
+      position: absolute;
+      top: 60px;
+      width: @sidebarWidth;
+      left: 0;
+      bottom:0;
+      background-color: @secondarySidebar;
+      > div.inner {
+        display: block;
+      }
+    }
+    #col2  {
+      .main-panel;
+      width: 100%;
+      border-left: 1px solid #999;
+      border-right: 1px solid #999;
+      width: auto;
+      .box-shadow(-6px 0 rgba(0, 0, 0, 0.1));
+      padding: 0px;
+      bottom: 0px;
+      top: 60px;
+      position: fixed;
+      overflow-x: hidden;
+      overflow-y: auto;
+      left: @sidebarWidth+@navWidth;
+      right: 0;
+      .box-sizing(border-box);
+      .closeMenu & {
+        left: @sidebarWidth+@collapsedNavWidth;
+      }
+    }
+    #col3{
+      display:none;
+    }
+  }
+
+  .one_col{
+    .fixed-header {
+      border: none;
+      .box-shadow(none);
+    }
+    #col1  {
+      .main-panel;
+      margin-top: 35px;
+      width: 100%;
+    }
+    #col2, #col3 {
+      display:none;
+    }
+  }
+
+  .two_col{
+    #col1  {
+      width: 48.93617021%;
+    }
+    #col2  {
+      width: 48.93617021%;
+    }
+    #col3 {
+      display: none;
+    }
+
+  }
+
+}

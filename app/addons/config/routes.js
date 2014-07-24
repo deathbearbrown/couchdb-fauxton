@@ -22,7 +22,10 @@ define([
 function(app, FauxtonAPI, Config, Views) {
 
   var ConfigRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: "one_pane",
+    layout: {
+      template: "default_template",
+      className: ["one_col"]
+    },
 
     initialize: function () {
       this.configs = new Config.Collection();
@@ -45,7 +48,7 @@ function(app, FauxtonAPI, Config, Views) {
     },
 
     config: function () {
-      this.setView("#dashboard-content", new Views.Table({collection: this.configs}));
+      this.setView("#col1", new Views.Table({collection: this.configs}));
     },
 
     establish: function () {

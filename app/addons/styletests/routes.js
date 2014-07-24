@@ -19,7 +19,10 @@ define([
 function(app, FauxtonAPI, Views) {
 
 	var TestRouteObject = FauxtonAPI.RouteObject.extend({
-		layout: "one_pane",
+		layout: {
+      template: "default_template",
+      className: ["one_col"]
+    },
 		routes: {
 			"tests": "initialize"
 		},
@@ -29,12 +32,12 @@ function(app, FauxtonAPI, Views) {
       return false;
     },
     initialize: function(){
-			this.setView("#dashboard-content", new Views.tests({}));
+			this.setView("#col1", new Views.tests({}));
     }
 	});
 
 	Views.RouteObjects = [TestRouteObject];
 
 	return Views;
- 
+
 });

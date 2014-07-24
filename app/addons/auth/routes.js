@@ -18,8 +18,10 @@ define([
 
 function(app, FauxtonAPI, Auth) {
   var authRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: 'one_pane',
-
+    layout: {
+      template: "default_template",
+      className: ["one_col"]
+    },
     routes: {
       'login?*extra': 'login',
       'login': 'login',
@@ -32,7 +34,7 @@ function(app, FauxtonAPI, Auth) {
     login: function () {
       var urlBack = app.getParams().urlback;
       this.crumbs = [{name: 'Login', link:"#"}];
-      this.setView('#dashboard-content', new Auth.LoginView({
+      this.setView('#col1', new Auth.LoginView({
         model: FauxtonAPI.session,
         urlBack: urlBack
       }));
@@ -47,18 +49,18 @@ function(app, FauxtonAPI, Auth) {
 
     changePassword: function () {
       this.crumbs = [{name: 'Change Password', link:"#"}];
-      this.setView('#dashboard-content', new Auth.ChangePassword({model: FauxtonAPI.session}));
+      this.setView('#col1', new Auth.ChangePassword({model: FauxtonAPI.session}));
     },
 
     createAdmin: function () {
       this.crumbs = [{name: 'Create Admin', link:"#"}];
-      this.setView('#dashboard-content', new Auth.CreateAdminView({model: FauxtonAPI.session}));
+      this.setView('#col1', new Auth.CreateAdminView({model: FauxtonAPI.session}));
     },
 
     noAccess: function () {
       var urlBack = app.getParams().urlback;
       this.crumbs = [{name: 'Access Denied', link:"#"}];
-      this.setView('#dashboard-content', new Auth.NoAccessView({
+      this.setView('#col1', new Auth.NoAccessView({
         urlBack: urlBack
       }));
       this.apiUrl = 'noAccess';
@@ -66,7 +68,9 @@ function(app, FauxtonAPI, Auth) {
   });
 
   var userRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: 'with_sidebar',
+    layout: {
+      className: ["with_sidebar"]
+    },
 
     routes: {
       'changePassword': {
@@ -78,25 +82,25 @@ function(app, FauxtonAPI, Auth) {
         route: 'addAdmin',
       },
     },
-    
+
     initialize: function () {
-     this.navDrop = this.setView('#sidebar-content', new Auth.NavDropDown({model: FauxtonAPI.session}));
+     this.navDrop = this.setView('#col1', new Auth.NavDropDown({model: FauxtonAPI.session}));
     },
 
     changePassword: function () {
       this.navDrop.setTab('change-password');
-      this.setView('#dashboard-content', new Auth.ChangePassword({model: FauxtonAPI.session}));
+      this.setView('#col2', new Auth.ChangePassword({model: FauxtonAPI.session}));
     },
 
     addAdmin: function () {
       this.navDrop.setTab('add-admin');
-      this.setView('#dashboard-content', new Auth.CreateAdminView({login_after: false, model: FauxtonAPI.session}));
+      this.setView('#col2', new Auth.CreateAdminView({login_after: false, model: FauxtonAPI.session}));
     },
 
     crumbs: [{name: 'User Management', link: '#'}]
   });
 
   Auth.RouteObjects = [authRouteObject, userRouteObject];
-  
+
   return Auth;
 });

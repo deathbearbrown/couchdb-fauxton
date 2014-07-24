@@ -18,7 +18,10 @@ define([
 function(app, FauxtonAPI, VerifyInstall) {
 
   var VerifyRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: 'one_pane',
+    layout: {
+      template: "default_template",
+      className: ["one_col"]
+    },
 
     routes: {
       'verifyinstall': "verifyInstall"
@@ -26,7 +29,7 @@ function(app, FauxtonAPI, VerifyInstall) {
     selectedHeader: "Verify",
 
     verifyInstall: function () {
-      this.setView('#dashboard-content', new VerifyInstall.Main({}));
+      this.setView('#col1', new VerifyInstall.Main({}));
     },
 
     crumbs: [{name: 'Verify CouchDB Installation', link: '#'}]

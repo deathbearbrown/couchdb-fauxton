@@ -18,7 +18,10 @@ define([
 ],
 function(app, FauxtonAPI, Replication, Views) {
   var  RepRouteObject = FauxtonAPI.RouteObject.extend({
-    layout: "one_pane",
+    layout: {
+      template: "default_template",
+      className: ["one_col"]
+    },
     roles: ["_admin"],
     routes: {
       "replication": "defaultView",
@@ -35,11 +38,11 @@ function(app, FauxtonAPI, Replication, Views) {
 			this.databases = new Replication.DBList({});
       this.tasks = new Replication.Tasks({id: "ReplicationTasks"});
       this.replication = new Replication.Replicate({});
-			this.setView("#dashboard-content", new Views.ReplicationForm({
+			this.setView("#col1", new Views.ReplicationForm({
         selectedDB: dbname ||"",
 				collection: this.databases,
         status:  this.tasks
-			}));  
+			}));
     }
   });
 
