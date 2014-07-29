@@ -34,13 +34,21 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
 
   var Views = {};
 
+  Views.IndexHeader = FauxtonAPI.View.extend({
+    template: "addons/indexes/templates/index_header"
+  });
+
   Views.NewIndexPlaceholder = FauxtonAPI.View.extend({
-    template: "addons/indexes/templates/new_placeholder",
+    template: "addons/indexes/templates/preview_screen",
     className: "watermark-logo"
   });
 
-  Views.EditorPlaceholder = FauxtonAPI.View.extend({
-    template: "addons/indexes/templates/index_editor",
+  Views.ShowEditor = FauxtonAPI.View.extend({
+    template: "addons/indexes/templates/show_editor",
+  });
+
+  Views.ListEditor = FauxtonAPI.View.extend({
+    template: "addons/indexes/templates/list_editor",
   });
 
 

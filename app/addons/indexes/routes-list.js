@@ -30,10 +30,16 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources, RouteCore) {
       "database/:database/new_list": "newListsEditor",
       "database/:database/new_list/:designDoc": "newListsEditor"
     },
-    newListsEditor: function(){
-      this.setView("#left-content", new Views.EditorPlaceholder({}));
 
-      this.setView("#right-content", new Views.NewIndexPlaceholder({}));
+    apiUrl: function() {
+      //TODO: Hook up proper API urls
+      return '';
+    },
+
+    newListsEditor: function(){
+      this.setView("#left-content", new Views.ListEditor({}));
+
+      this.setView("#right-content", new Views.PreviewScreen({}));
       this.crumbs = function () {
         return [
           {"name": this.data.database.id, "link": Databases.databaseUrl(this.data.database)},
@@ -41,9 +47,9 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources, RouteCore) {
       };
     },
     tempFn:  function(databaseName, ddoc, fn){
-      this.setView("#left-content", new Views.EditorPlaceholder({}));
+      this.setView("#left-content", new Views.ListEditor({}));
 
-      this.setView("#right-content", new Views.NewIndexPlaceholder({}));
+      this.setView("#right-content", new Views.PreviewScreen({}));
       this.crumbs = function () {
         return [
           {"name": this.data.database.id, "link": Databases.databaseUrl(this.data.database)},

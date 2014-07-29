@@ -38,6 +38,75 @@ function(app, FauxtonAPI, Components, Documents, Databases, Views, QueryOptions,
     });
   }
 
+  //Header for alldocs with search, back, Menu, Query options, select etc
+  Views.AllDocsHeader = FauxtonAPI.View.extend({
+    template: "addons/documents/templates/header_alldocs",
+    events: {
+      'select .selectAllDocs': 'selectAllDocs'
+    },
+    initialize: function(options){
+
+    },
+    selectAllDocs: function(){
+      //trigger event to select all in other view
+    },
+    afterRender:function(){
+      //insert DB search dropdown
+
+      //insert top create level dropdown with gear icon
+
+      //search docs
+
+      //insert queryoptions
+
+    }
+  });
+
+
+  //header that shows up when a doc is selected
+  // when a Doc is selected, trigger a routeEvent to render this
+  // the routeEvent will determine which header to show (??)
+  Views.DocEditHeader = FauxtonAPI.View.extend({
+    template: "addons/documents/templates/header_doc_edit",
+    events: {
+      'select .selectAllDocs': 'selectAllDocs'
+    },
+    initialize: function(options){
+
+    },
+    selectAllDocs: function(){
+      //trigger event to select all in other view
+    },
+    afterRender:function(){
+      //insert DB search dropdown
+
+      //insert top create level dropdown with gear icon
+    }
+  });
+
+  Views.DocsHeader = FauxtonAPI.View.extend({
+    template: "addons/documents/templates/header_selecteddoc",
+    events: {
+      'select .selectAllDocs': 'selectAllDocs'
+    },
+    initialize: function(options){
+
+    },
+    selectAllDocs: function(){
+      //trigger event to select all in other view
+    },
+    afterRender:function(){
+      //insert DB search dropdown
+
+      //insert top create level dropdown with gear icon
+
+      //search docs
+
+      //insert queryoptions
+
+    }
+  });
+
 
   Views.DeleteDBModal = Components.ModalView.extend({
     template: "addons/documents/templates/delete_database_modal",

@@ -172,6 +172,7 @@ function(app, FauxtonAPI, Documents, Changes, DocEditor, Databases, Resources) {
         database: this.data.database
       }));
     },
+
     designDocMetadata:  function(database, ddoc){
       this.toolsView && this.toolsView.remove();
       this.viewEditor && this.viewEditor.remove();
@@ -298,28 +299,6 @@ function(app, FauxtonAPI, Documents, Changes, DocEditor, Databases, Resources) {
         collection = this.data.database.allDocs;
         collection.paging.pageSize = pageSize;
 
-      } else {
-        collection = this.data.indexedDocs = new Documents.IndexCollection(null, {
-          database: this.data.database,
-          design: ddoc,
-          view: view,
-          params: docParams,
-          paging: {
-            pageSize: pageSize
-          }
-        });
-
-        if (!this.documentsView) {
-          this.documentsView = this.createViewDocumentsView({
-            designDoc: ddoc,
-            docParams: docParams,
-            urlParams: urlParams,
-            database: this.data.database,
-            indexedDocs: this.indexedDocs,
-            designDocs: this.data.designDocs,
-            view: view
-          });
-        }
       }
 
       this.documentsView.setCollection(collection);

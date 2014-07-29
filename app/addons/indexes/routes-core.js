@@ -22,24 +22,16 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources) {
 
   var CoreIndexRouteObj =  FauxtonAPI.RouteObject.extend({
     layout: "two_pane",
-    apiUrl: function() {
-      return [this.doc.url("apiurl"), this.doc.documentation()];
-    },
+
     initialize: function (route, masterLayout, options) {
       this.databaseName = options[0];
 
-      this.setView("#breadcrumbs", new Views.EditorPlaceholder({}));
+      //this is a test
+      this.setView("#breadcrumbs", new Views.IndexHeader({}));
 
       this.data = {
         database: new Databases.Model({id:this.databaseName})
       };
-      this.docID = options[1]||'new';
-
-      this.doc = new Documents.DDoc({
-        _id: this.docID
-      }, {
-        database: this.data.database
-      });
 
       this.data.designDocs = new Documents.AllDocs(null, {
         database: this.data.database,

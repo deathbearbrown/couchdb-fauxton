@@ -30,20 +30,27 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources, RouteCore) {
       "database/:database/new_show": "newShowEditor",
       "database/:database/new_show/:designDoc": "newShowEditor"
     },
-    newShowEditor: function(){
-      this.setView("#left-content", new Views.EditorPlaceholder({}));
 
-      this.setView("#right-content", new Views.NewIndexPlaceholder({}));
+    newShowEditor: function(){
+      this.setView("#left-content", new Views.ShowEditor({}));
+
+      this.setView("#right-content", new Views.PreviewScreen({}));
       this.crumbs = function () {
         return [
           {"name": this.data.database.id, "link": Databases.databaseUrl(this.data.database)},
         ];
       };
     },
-    tempFn:  function(databaseName, ddoc, fn){
-      this.setView("#left-content", new Views.EditorPlaceholder({}));
 
-      this.setView("#right-content", new Views.NewIndexPlaceholder({}));
+    apiUrl: function() {
+      //TODO: Hook up proper API urls
+      return '';
+    },
+
+    tempFn:  function(databaseName, ddoc, fn){
+      this.setView("#left-content", new Views.ShowEditor({}));
+
+      this.setView("#right-content", new Views.PreviewScreen({}));
       this.crumbs = function () {
         return [
           {"name": this.data.database.id, "link": Databases.databaseUrl(this.data.database)},

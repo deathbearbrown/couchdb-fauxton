@@ -34,7 +34,7 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources, RouteCore) {
     newViewEditor: function (database, designDoc) {
       var params = app.getParams();
 
-      this.setView("#right-content", new Views.NewIndexPlaceholder({}));
+      this.setView("#right-content", new Views.PreviewScreen({}));
 
       this.viewEditor = this.setView("#left-content", new Views.ViewEditor({
         currentddoc: "_design/"+designDoc || "",
@@ -59,7 +59,7 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources, RouteCore) {
 
       view = view.replace(/\?.*$/,'');
 
-      this.data.indexedDocs = new Documents.IndexCollection(null, {
+      this.data.indexedDocs = new Resources.IndexCollection(null, {
         database: this.data.database,
         design: decodeDdoc,
         view: view,
