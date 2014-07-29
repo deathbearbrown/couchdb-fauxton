@@ -42,7 +42,7 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources, RouteCore) {
       this.setView("#right-content", new Views.PreviewScreen({}));
       this.crumbs = function () {
         return [
-          {"name": this.data.database.id, "link": Databases.databaseUrl(this.data.database)},
+          {"name": "Create List Index", "link": Databases.databaseUrl(this.data.database)},
         ];
       };
     },

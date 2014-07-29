@@ -46,7 +46,7 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources, RouteCore) {
 
       this.crumbs = function () {
         return [
-          {"name": this.data.database.id, "link": Databases.databaseUrl(this.data.database)},
+          {"name": "Create View Index", "link": Databases.databaseUrl(this.data.database)},
         ];
       };
     },
@@ -94,7 +94,7 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources, RouteCore) {
 
       this.crumbs = function () {
         return [
-          {"name": this.data.database.id, "link": Databases.databaseUrl(this.data.database)},
+          {"name": view, "link": Databases.databaseUrl(this.data.database)},
         ];
       };
 
