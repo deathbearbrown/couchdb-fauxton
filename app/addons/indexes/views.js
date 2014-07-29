@@ -156,19 +156,20 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
       if (event) { event.preventDefault();}
 
       $('#dashboard-content').scrollTop(0); //scroll up
-
+      //check if the code is valid & the inputs are filled out
       if (this.hasValidCode() && this.$('#new-ddoc:visible').val() !=="") {
         var mapVal = this.mapEditor.getValue(),
         reduceVal = this.reduceVal(),
         viewName = this.$('#index-name').val(),
         ddoc = this.getCurrentDesignDoc(),
-        ddocName = ddoc.id,
-        viewNameChange = false;
+        ddocName = ddoc.id;
+        this.viewNameChange = false;
+
 
         if (this.viewName !== viewName) {
           ddoc.removeDdocView(this.viewName);
           this.viewName = viewName;
-          viewNameChange = true;
+          this.viewNameChange = true;
         }
 
         notification = FauxtonAPI.addNotification({
@@ -180,42 +181,11 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
         ddoc.setDdocView(viewName, mapVal, reduceVal);
 
         ddoc.save().then(function () {
-          that.ddocs.add(ddoc);
-
-          that.mapEditor.editSaved();
-          that.reduceEditor && that.reduceEditor.editSaved();
-
-
-          FauxtonAPI.addNotification({
-            msg: "View has been saved.",
-            type: "success",
-            selector: "#define-view .errors-container",
-            clear: true
-          });
-
-          if (that.newView || viewNameChange) {
-            var fragment = '/database/' + that.database.safeID() +'/' + ddoc.safeID() + '/_view/' + app.utils.safeURLName(viewName);
-
-            FauxtonAPI.navigate(fragment, {trigger: false});
-            that.newView = false;
-            that.ddocID = ddoc.safeID();
-            that.viewName = viewName;
-            that.ddocInfo = ddoc;
-            that.showIndex = true;
-            that.render();
-            FauxtonAPI.triggerRouteEvent('reloadDesignDocs', {
-              selectedTab: app.utils.removeSpecialCharacters(ddocName.replace(/_design\//,'')) + '_' + app.utils.removeSpecialCharacters(viewName)
-            });
-          }
-
-          if (that.reduceFunStr !== reduceVal) {
-            that.reduceFunStr = reduceVal;
-            that.advancedOptions.renderOnUpdatehasReduce(that.hasReduce());
-          }
-
-          FauxtonAPI.triggerRouteEvent('updateAllDocs', {ddoc: ddocName, view: viewName});
-
-        }, function(xhr) {
+          //on success
+          that.afterSave(ddoc, viewName, ddocName);
+        },
+        function(xhr) {
+          //on failure
           var responseText = JSON.parse(xhr.responseText).reason;
           notification = FauxtonAPI.addNotification({
             msg: "Save failed: " + responseText,
@@ -224,6 +194,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
           });
         });
       } else {
+        //if nothing is filled out give an error message
         var errormessage = (this.$('#new-ddoc:visible').val() ==="")?"Enter a design doc name":"Please fix the Javascript errors and try again.";
         notification = FauxtonAPI.addNotification({
           msg: errormessage,
@@ -232,6 +203,51 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
           clear: true
         });
       }
+    },
+
+    afterSave: function(ddoc, viewName, ddocName){
+      var reduceVal = this.reduceVal();
+      //add ddoc to the collection
+      this.ddocs.add(ddoc);
+
+      //trigger the EditSaved function on the map editor & reduce editor
+      this.mapEditor.editSaved();
+      this.reduceEditor && this.reduceEditor.editSaved();
+
+
+      //show a notification
+      FauxtonAPI.addNotification({
+        msg: "View has been saved.",
+        type: "success",
+        selector: "#define-view .errors-container",
+        clear: true
+      });
+
+
+      //if it's new or the name changed (aka created a new doc)
+      if (this.newView || this.viewNameChange) {
+        var fragment = '/database/' + this.database.safeID() +'/' + ddoc.safeID() + '/_view/' + app.utils.safeURLName(viewName);
+
+        FauxtonAPI.navigate(fragment, {trigger: false});
+        this.newView = false;
+        this.ddocID = ddoc.safeID();
+        this.viewName = viewName;
+        this.ddocInfo = ddoc;
+        this.showIndex = true;
+        this.render();
+        FauxtonAPI.triggerRouteEvent('reloadDesignDocs', {
+          selectedTab: app.utils.removeSpecialCharacters(ddocName.replace(/_design\//,'')) + '_' + app.utils.removeSpecialCharacters(viewName)
+        });
+      }
+
+      // TODO:// this should change to a trigger because we shouldn't define advanced options in this view
+      if (this.reduceFunStr !== reduceVal) {
+        this.reduceFunStr = reduceVal;
+       // this.advancedOptions.renderOnUpdatehasReduce(this.hasReduce());
+      }
+
+      // Route Event will reload the right content
+      FauxtonAPI.triggerRouteEvent('updateAllDocs', {ddoc: ddocName, view: viewName});
     },
 
     updateView: function(event, paramInfo) {
@@ -430,28 +446,13 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
         database: this.database
       }));
 
-      if (!this.newView) {
-        this.eventer = _.extend({}, Backbone.Events);
-
-        this.advancedOptions = this.insertView('#query', new QueryOptions.AdvancedOptions({
-          updateViewFn: this.updateView,
-          previewFn: this.previewView,
-          database: this.database,
-          viewName: this.viewName,
-          ddocName: this.model.id,
-          hasReduce: this.hasReduce(),
-          eventer: this.eventer,
-          showStale: true
-        }));
-      }
-
     },
 
     afterRender: function() {
-
-      if (this.params && !this.newView) {
-        this.advancedOptions.updateFromParams(this.params);
-      }
+      //TODO: have this happen on a trigger once we move advanced options to the header
+      // if (this.params && !this.newView) {
+      //   this.advancedOptions.updateFromParams(this.params);
+      // }
 
       this.designDocSelector.updateDesignDoc();
       this.showEditors();
