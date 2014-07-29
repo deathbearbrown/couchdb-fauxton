@@ -14,12 +14,11 @@ define([
   "api",
   "addons/indexes/views",
   "addons/indexes/routes-viewindexes",
-  "addons/indexes/routes-filter",
   "addons/indexes/routes-show",
   "addons/indexes/routes-list",
 ],
 
-function (app, FauxtonAPI, Views, ViewIndex, Filter, Show, List) {
-  Views.RouteObjects = [ViewIndex, Filter, Show, List];
+function (app, FauxtonAPI, Views, ViewIndex, Show, List) {
+  Views.RouteObjects = [ViewIndex, Show, List];
   return Views;
 });

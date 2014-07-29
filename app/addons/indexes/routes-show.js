@@ -15,13 +15,13 @@ define([
   "addons/databases/base",
   "addons/indexes/views",
   "addons/documents/views",
-  "addons/indexes/resources"
+  "addons/indexes/resources",
+  "addons/indexes/routes-core"
 ],
 
-function (app, FauxtonAPI, Databases, Views, Documents, Resources) {
+function (app, FauxtonAPI, Databases, Views, Documents, Resources, RouteCore) {
 
-  var ShowIndexes = FauxtonAPI.RouteObject.extend({
-    layout: "two_pane",
+  var ShowIndexes = RouteCore.extend({
     routes: {
       "database/:database/_design/:ddoc/_show/:fn": {
         route: "tempFn",
@@ -31,10 +31,19 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources) {
       "database/:database/new_show/:designDoc": "newShowEditor"
     },
     newShowEditor: function(){
-      return false;
+      this.setView("#left-content", new Views.EditorPlaceholder({}));
+
+      this.setView("#right-content", new Views.NewIndexPlaceholder({}));
+      this.crumbs = function () {
+        return [
+          {"name": this.data.database.id, "link": Databases.databaseUrl(this.data.database)},
+        ];
+      };
     },
     tempFn:  function(databaseName, ddoc, fn){
-      this.setView("#dashboard-upper-content", new Documents.Views.temp({}));
+      this.setView("#left-content", new Views.EditorPlaceholder({}));
+
+      this.setView("#right-content", new Views.NewIndexPlaceholder({}));
       this.crumbs = function () {
         return [
           {"name": this.data.database.id, "link": Databases.databaseUrl(this.data.database)},

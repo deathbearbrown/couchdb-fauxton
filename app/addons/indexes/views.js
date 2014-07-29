@@ -34,6 +34,16 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
 
   var Views = {};
 
+  Views.NewIndexPlaceholder = FauxtonAPI.View.extend({
+    template: "addons/indexes/templates/new_placeholder",
+    className: "watermark-logo"
+  });
+
+  Views.EditorPlaceholder = FauxtonAPI.View.extend({
+    template: "addons/indexes/templates/index_editor",
+  });
+
+
   Views.ViewEditor = FauxtonAPI.View.extend({
     template: "addons/indexes/templates/view_editor",
     builtinReduces: ['_sum', '_count', '_stats'],

@@ -514,7 +514,7 @@ function(app, FauxtonAPI, PagingCollection) {
 
     urlRef: function(context, params) {
       var query = "";
-      
+
       if (params) {
         if (!_.isEmpty(params)) {
           query = "?" + $.param(params);
@@ -628,74 +628,7 @@ function(app, FauxtonAPI, PagingCollection) {
   });
 
 
-  Documents.PouchIndexCollection = PagingCollection.extend({
-    model: Documents.ViewRow,
-    documentation: function(){
-      return "docs";
-    },
-    initialize: function(_models, options) {
-      this.database = options.database;
-      this.rows = options.rows;
-      this.view = options.view;
-      this.design = options.design.replace('_design/','');
-      this.params = _.extend({limit: 20, reduce: false}, options.params);
 
-      this.idxType = "_view";
-    },
-
-    url: function () {
-      return '';
-    },
-
-    simple: function () {
-      var docs = this.map(function (item) {
-        return {
-          _id: item.id,
-          key: item.get('key'),
-          value: item.get('value')
-        };
-      });
-
-      return new Documents.PouchIndexCollection(docs, {
-        database: this.database,
-        params: this.params,
-        view: this.view,
-        design: this.design,
-        rows: this.rows
-      });
-
-    },
-
-    fetch: function() {
-      var deferred = FauxtonAPI.Deferred();
-      this.reset(this.rows, {silent: true});
-
-      this.viewMeta = {
-        total_rows: this.rows.length,
-        offset: 0,
-        update_seq: false
-      };
-
-      deferred.resolve();
-      return deferred;
-    },
-
-    totalRows: function() {
-      return this.viewMeta.total_rows || "unknown";
-    },
-
-    updateSeq: function() {
-      return this.viewMeta.update_seq || false;
-    },
-
-    buildAllDocs: function(){
-      this.fetch();
-    },
-
-    allDocs: function(){
-      return this.models;
-    }
-  });
 
 
 

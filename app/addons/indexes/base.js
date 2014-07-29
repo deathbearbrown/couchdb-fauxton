@@ -15,15 +15,14 @@
 define([
   "app",
   "api",
-  "addons/indexes/views",
   "addons/indexes/routes"
 ],
-function(app, FauxtonAPI, Views, Routes) {
+function(app, FauxtonAPI, Routes) {
   Routes.initialize = function() {
 
     /*
       Example of an extension:
-      An extension is just an event that may or may not have listener in another view.
+      An extension is just like an event that may or may not have listener in another view.
       In this case the listener is in the documents addon in the sidebar.
 
       If there are is a view that you want rendered in another route, this is the way to do it.
@@ -39,6 +38,37 @@ function(app, FauxtonAPI, Views, Routes) {
 
 
     */
+    //Show in the sidebar
+    FauxtonAPI.registerExtension('sidebar:list', {
+      selector:'views',
+      ddocType:'view',
+      icon: "fonticon-sidenav-map-reduce"
+    });
+    FauxtonAPI.registerExtension('sidebar:list', {
+      selector:'list',
+      icon: "fonticon-sidenav-list-function"
+    });
+    FauxtonAPI.registerExtension('sidebar:list', {
+      selector:'show',
+      icon: "fonticon-sidenav-show-function"
+    });
+
+
+    /* show in the add new menu dropdown */
+    FauxtonAPI.registerExtension('sidebar:links', {
+      title: "Secondary View",
+      url: "new_view"
+    });
+    FauxtonAPI.registerExtension('sidebar:links', {
+      title: "List Function",
+      url: "new_list"
+    });
+
+    FauxtonAPI.registerExtension('sidebar:links', {
+      url: 'new_show',
+      title: 'Show Index'
+    });
+
   };
   return Routes;
 });
