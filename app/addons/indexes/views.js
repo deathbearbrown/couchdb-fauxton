@@ -38,7 +38,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
     template: "addons/indexes/templates/index_header"
   });
 
-  Views.NewIndexPlaceholder = FauxtonAPI.View.extend({
+  Views.PreviewScreen = FauxtonAPI.View.extend({
     template: "addons/indexes/templates/preview_screen",
     className: "watermark-logo"
   });
@@ -63,8 +63,7 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
       "click button.preview": "previewView",
       "click #db-views-tabs-nav": 'toggleIndexNav',
       "click .beautify_map":  "beautifyCode",
-      "click .beautify_reduce":  "beautifyCode",
-      "click #query-options-wrapper": 'toggleIndexNav'
+      "click .beautify_reduce":  "beautifyCode"
     },
 
     langTemplates: {
@@ -359,28 +358,6 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
       }, this);
     },
 
-    toggleIndexNav: function (event) {
-      $('#dashboard-content').scrollTop(0); //scroll up
-
-      var $targetId = this.$(event.target).attr('id'),
-          $previousTab = this.$(this.$('li.active a').attr('href')),
-          $targetTab = this.$(this.$(event.target).attr('href'));
-
-      if ($targetTab.attr('id') !== $previousTab.attr('id')) {
-        $previousTab.removeAttr('style');
-      }
-
-      if ($targetId === 'index-nav') {
-        if (this.newView) { return; }
-        var that = this;
-        $('#dashboard-content').scrollTop(0); //scroll up
-        $targetTab.toggle('slow', function(){
-           that.showEditors();
-        });
-      } else {
-        $targetTab.toggle('slow');
-      }
-    },
 
     serialize: function() {
       return {
@@ -477,13 +454,8 @@ function(app, FauxtonAPI, Components, Documents, Databases, pouchdb,
       }
 
       this.designDocSelector.updateDesignDoc();
-      if (this.newView || this.showIndex) {
-        this.showEditors();
-        this.showIndex = false;
-      } else {
-        this.$('#index').hide();
-        this.$('#index-nav').parent().removeClass('active');
-      }
+      this.showEditors();
+      this.showIndex = false;
 
     },
 
