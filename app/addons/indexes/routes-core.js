@@ -26,9 +26,6 @@ function (app, FauxtonAPI, Databases, Views, Documents, Resources) {
     initialize: function (route, masterLayout, options) {
       this.databaseName = options[0];
 
-      //this is a test
-      this.setView("#breadcrumbs", new Views.IndexHeader({}));
-
       this.data = {
         database: new Databases.Model({id:this.databaseName})
       };
